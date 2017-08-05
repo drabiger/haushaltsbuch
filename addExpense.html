@@ -1,0 +1,54 @@
+<form ng-submit="addExpense()" ng-controller="NewExpenseController">
+	<div class="row form-group">
+		<div class="col-xs-12 col-md-5">
+			<label for="datepicker2">Datum</label>
+		</div>
+		<div class="col-xs-12 col-md-7">
+			<div class="form-group">
+				<div class="input-group date" id="datepicker2">
+					<input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Schließen" current-text="Heute" clear-text="Leeren" alt-input-formats="altInputFormats" />
+          			<span class="input-group-btn">
+            			<button type="button" class="btn btn-default" ng-click="open1()">
+            				<i class="glyphicon glyphicon-calendar"></i>
+        				</button>
+          			</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row form-group">
+		<div class="col-xs-12 col-md-5">
+			<label for="payer">Wer hat gezahlt?</label>
+		</div>
+		<div class="col-xs-12 col-md-7">
+			<label ng-repeat="payer in payerOptions" class="radio-inline">
+				<input type="radio" name="optradio" ng-click="payerSelected(payer)">{{payer}}</input>
+			</label>			
+		</div>
+	</div>
+
+	<div class="row form-group">
+		<div class="col-xs-12 col-md-5">
+			<label for="amount">Wo wurde eingekauft?</label>
+		</div>
+		<div class="col-xs-12 col-md-7">
+			<input type="text" ng-model="selectedShop" uib-typeahead="shop for shop in shops | filter:$viewValue | limitTo:8" class="form-control"></input>
+		</div>
+	</div>
+
+	<div class="row form-group">
+		<div class="col-xs-12 col-md-5">
+			<label for="amount">Ausgaben</label> (Euro)
+		</div>
+		<div class="col-xs-12 col-md-7">
+			<input type="number" class="form-control" min="0" max="10000" step="0.01" id="amount" ng-model="amount"></input>
+		</div>
+	</div>
+
+	<div class="row form-group">
+		<div class="col-xs-12">
+			<button type="submit" class="btn btn-success btn-block btn-lg">Hinzufügen</button>
+		</div>
+	</div>
+</form>

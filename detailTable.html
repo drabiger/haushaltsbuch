@@ -1,0 +1,19 @@
+<div ng-controller="ExpensesController">
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Wer</th>
+				<th>Wann</th>
+				<th>Wo</th>
+				<th>Wie viel</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="expense in expenses">
+				<td>{{expense.payer}}</td>
+				<td>{{expense.date}}</td>
+				<td>{{expense.shop}}</td>
+				<td>{{expense.amount}}</td>
+			</tr>
+		</tbody>
+</div>
