@@ -31,9 +31,9 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#" ng-click="handleAddExpense()">Eintragen</a></li>
-            <li><a href="#" ng-click="handleDetailList()">Ausgabenliste</a></li>
-            <li><a href="#" ng-click="handleSummary()">Auswertung</a></li>
+            <li class="active"><a href="#" data-toggle="collapse" data-target="#myNavbar" ng-click="handleAddExpense($event)">Eintragen</a></li>
+            <li><a href="#" data-toggle="collapse" data-target="#myNavbar" ng-click="handleDetailList($event)">Ausgabenliste</a></li>
+            <li><a href="#" data-toggle="collapse" data-target="#myNavbar" ng-click="handleSummary($event)">Auswertung</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>

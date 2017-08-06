@@ -17,19 +17,28 @@ define(['app'], function(app) {
   		return currentTopLevelPage === topLevelPages[2];
   	};
 
-  	$scope.handleAddExpense = function() {
+  	$scope.handleAddExpense = function($event) {
   		currentTopLevelPage = topLevelPages[0];
+  		removeAndAddActiveClassToNavigation($event);
   		console.log("add expense called");
   	};
 
-  	$scope.handleDetailList = function() {
+  	$scope.handleDetailList = function($event) {
   		currentTopLevelPage = topLevelPages[1];
+  		removeAndAddActiveClassToNavigation($event);
   		console.log("detailList called");
   	};
 
-  	$scope.handleSummary = function() {
+  	$scope.handleSummary = function($event) {
   		currentTopLevelPage = topLevelPages[2];
+  		removeAndAddActiveClassToNavigation($event);
   		console.log("summary called");
+  	};
+
+  	var removeAndAddActiveClassToNavigation = function($event) {
+  		var activeDiv = $(".nav li.active");
+  		activeDiv.removeClass("active");
+  		angular.element($event.currentTarget.closest('li')).addClass("active");
   	};
   });
 });

@@ -1,0 +1,36 @@
+<div ng-controller="ExpensesController">
+	<div class="panel panel-default">
+	<div class="panel-heading">Auswertung</div>
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-xs-5">
+				Flash an Nanaka
+			</div>
+			<div class="col-xs-3">
+				<span class="pull-right">{{getSumFlashAnNanaka()}}&nbsp;€</span>
+			</div>
+			<div class="col-xs-4">
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="{{getFlashPerc()}}" aria-valuemin="0" aria-valuemax="100" style="width:{{getFlashPerc()}}%">
+						<span class="sr-only">{{getFlashPerc()}}%</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-5">
+				Nanaka an Flash
+			</div>
+			<div class="col-xs-3">
+				<span class="pull-right">{{getSumNanakaAnFlash()}}&nbsp;€</span>
+			</div>
+			<div class="col-xs-4">
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuenow="{{getNanakaPerc()}}" aria-valuemin="0" aria-valuemax="100" style="width:{{getNanakaPerc()}}%">
+						<span class="sr-only">{{getNanakaPerc()}}%</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
