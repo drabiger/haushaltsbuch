@@ -1,6 +1,6 @@
 define(['app'], function(app) {
 	
-  app.controller('ExpensesController', function ExpensesController($scope) {
+  app.controller('ExpensesController', ['$scope', 'expenseService', function ExpensesController($scope, expenseService) {
     $scope.expenses = [
       { amount: parseFloat('50.0'), payer: "Flash", shop: "Aldi", date: "23. Mai 1974"},
       { amount: parseFloat('42.0'), payer: "Nanaka", shop: "Edeka", date: "24. März 1983"},
@@ -56,6 +56,11 @@ define(['app'], function(app) {
       return Math.round((100*sumNanaka)/(sumFlash+sumNanaka));
     };
 
-  });
+    expenseService.registerAddExpenseListener(this, function(payer, amount, shop, date) {
+        console.log("ExpenseController: got callback add expense listener, amount=", amount);
+        $scope.expenses.push({amount: amount, payer: payer, shop: shop, date: date});
+    });
+
+  }]);
 
 });

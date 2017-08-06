@@ -1,6 +1,6 @@
 define(['app'], function(app) {
 	
-	app.controller('NewExpenseController', function NewExpenseController($scope) {
+	app.controller('NewExpenseController', ['$scope', 'expenseService', function NewExpenseController($scope, expenseService) {
 	  	$scope.payerOptions = [ "Flash", "Nanaka"];
 	  	$scope.selectedPayer;
 	  	$scope.expenseDate;
@@ -17,7 +17,7 @@ define(['app'], function(app) {
 	  	};
 
 	  	$scope.addExpense = function() {
-	  		alert("got it: " + $scope.dt + ", " + $scope.selectedPayer + ", " + $scope.selectedShop + ", " + $scope.amount);
+	  		expenseService.addExpense($scope.selectedPayer, $scope.amount, $scope.selectedShop, $scope.dt);
 	  	};
 
 	  	// Shop typeahead
@@ -68,6 +68,6 @@ define(['app'], function(app) {
 
 	    return '';
 	  }
-  	});
+  	}]);
   	
 });
