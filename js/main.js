@@ -17,6 +17,6 @@ requirejs.config({
     }
 });
 
-requirejs(['jquery', 'app', 'bootstrap'], function($, app) {
+requirejs(['jquery', 'app', 'bootstrap', 'NavigationController', 'NewExpenseController', 'ExpensesController'], function($, app) {
     app.init();
 });

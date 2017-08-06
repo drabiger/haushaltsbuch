@@ -19,33 +19,37 @@
     <script data-main="js/main" src="node_modules/requirejs/require.js"></script>
   </head>
   <body>
-    <nav class="navbar navbar-inverse">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>                        
-        </button>
-        <a class="navbar-brand" href="#">Haushaltsbuch</a>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Eintragen</a></li>
-          <li><a href="#">Liste</a></li>
-          <li><a href="#">Auswertung</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        </ul>
-      </div>
-    </nav>
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-12 col-sm-4">
-          <div ng-include src="'addExpense.html'"></div>
+    <div ng-controller="NavigationController">
+      <nav class="navbar navbar-inverse" >
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="#">Haushaltsbuch</a>
         </div>
-        <div class="hidden-xs col-sm-8">
-          <div ng-include src="'detailTable.html'"></div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#" ng-click="handleAddExpense()">Eintragen</a></li>
+            <li><a href="#" ng-click="handleDetailList()">Ausgabenliste</a></li>
+            <li><a href="#" ng-click="handleSummary()">Auswertung</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-4">
+            <div ng-if="showAddExpense()" ng-include="'addExpense.html'"></div>
+            <div ng-if="showDetailList()" ng-include="'detailTable.html'"></div>
+            <div ng-if="showSummary()" ng-include="'summary.html'"></div>
+          </div>
+          <div class="hidden-xs col-sm-8">
+            <div ng-include src="'detailTable.html'"></div>
+          </div>
         </div>
       </div>
     </div>
