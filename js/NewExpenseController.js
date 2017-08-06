@@ -12,12 +12,41 @@ define(['app'], function(app) {
 	    	showWeeks: true
 	  	};
 
+	  	$scope.operationMessage = {
+	  		success: undefined,
+	  		message: undefined
+	  	};
+
 	  	$scope.payerSelected = function(item) {
 	  		$scope.selectedPayer = item;
 	  	};
 
+	  	var resetOperationMessage = function() {
+	  		$scope.operationMessage.success = undefined;
+	  		$scope.operationMessage.message = undefined;
+	  		$("#operationFeedback").slideDown(1);
+	  	}
+
+	  	var resetInputFormPartially = function() {
+	  		$scope.amount = "";
+	  		$scope.selectedShop = "";
+	  	};
+
 	  	$scope.addExpense = function() {
-	  		expenseService.addExpense($scope.selectedPayer, $scope.amount, $scope.selectedShop, $scope.dt);
+	  		resetOperationMessage();
+	  		expenseService.addExpense($scope.selectedPayer, $scope.amount, $scope.selectedShop, 
+	  			$scope.dt, setExpenseResultOperationMessage);
+	  	};
+
+	  	var setExpenseResultOperationMessage = function(operationResult, operationMessage) {
+	  		$scope.operationMessage.success = operationResult;
+	  		$scope.operationMessage.message = operationMessage;
+		  	
+		  	setTimeout(function() {
+		  		$("#operationFeedback").delay(4000).slideUp(500, function() {
+			    	console.log("closed");
+				})}, 500);
+	  		resetInputFormPartially();
 	  	};
 
 	  	// Shop typeahead
