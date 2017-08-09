@@ -20,35 +20,42 @@
   </head>
   <body>
     <div ng-controller="NavigationController">
-      <nav class="navbar navbar-inverse" >
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>                        
-          </button>
-          <a class="navbar-brand" href="#">Haushaltsbuch</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#" data-toggle="collapse" data-target="#myNavbar" ng-click="handleAddExpense($event)">Eintragen</a></li>
-            <li><a href="#" data-toggle="collapse" data-target="#myNavbar" ng-click="handleDetailList($event)">Ausgabenliste</a></li>
-            <li><a href="#" data-toggle="collapse" data-target="#myNavbar" ng-click="handleSummary($event)">Auswertung</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-          </ul>
-        </div>
-      </nav>
-      <div class="container">
-        <div class="row">
-          <div class="col-xs-12 col-sm-4">
-            <div ng-if="showAddExpense()" ng-include="'addExpense.html'"></div>
-            <div ng-if="showDetailList()" ng-include="'detailTable.html'"></div>
-            <div ng-if="showSummary()" ng-include="'summary.html'"></div>
+      <div ng-controller="UserSessionController">
+        <nav class="navbar navbar-inverse" >
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#">Haushaltsbuch</a>
           </div>
-          <div class="hidden-xs col-sm-8">
-            <div ng-include src="'detailTable.html'"></div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav" ng-if="loggedIn">
+              <li class="active"><a href="#" data-toggle="collapse" data-target="#myNavbar" ng-click="handleAddExpense($event)">Eintragen</a></li>
+              <li><a href="#" data-toggle="collapse" data-target="#myNavbar" ng-click="handleDetailList($event)">Ausgabenliste</a></li>
+              <li><a href="#" data-toggle="collapse" data-target="#myNavbar" ng-click="handleSummary($event)">Auswertung</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li style="display: none;" id="logoutMenu"><a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout {{currentUser}}</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="container">
+        {{loggedIn}}
+          <div class="row" ng-if="loggedIn == false">
+            <button type="button" class="btn btn-success btn-block btn-lg" ng-click="logIn()">Grant Access to Google Drive</button>
+          </div>
+
+          <div class="row" ng-if="loggedIn == true">
+            <div class="col-xs-12 col-sm-4">
+              <div ng-if="showAddExpense()" ng-include="'addExpense.html'"></div>
+              <div ng-if="showDetailList()" ng-include="'detailTable.html'"></div>
+              <div ng-if="showSummary()" ng-include="'summary.html'"></div>
+            </div>
+            <div class="hidden-xs col-sm-8">
+              <div ng-include src="'detailTable.html'"></div>
+            </div>
           </div>
         </div>
       </div>

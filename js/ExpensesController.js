@@ -16,6 +16,18 @@ define(['app'], function(app) {
     var sumFlash = 0;
     var sumNanaka = 0;
 
+    $scope.getExpenses = function() {
+      expenseService.getListOfExpenses(setExpenses);
+      return $scope.expenses;
+    };
+
+    var setExpenses = function(expenseArray) {
+      console.log("setExpenses", expenseArray);
+      $scope.$apply(function() {
+        $scope.expenses = expenseArray;
+      });
+    };
+
     var calcSums = function() {
       $.each($scope.expenses, function(index, expense) {
         if(expense.payer === "Flash") {

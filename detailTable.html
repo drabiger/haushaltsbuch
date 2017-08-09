@@ -12,7 +12,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="expense in expenses">
+				<tr ng-repeat="expense in getExpenses()">
 					<td>{{expense.payer}}</td>
 					<td>{{expense.date}}</td>
 					<td>{{expense.shop}}</td>
