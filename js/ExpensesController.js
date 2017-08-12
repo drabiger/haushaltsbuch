@@ -17,8 +17,8 @@ define(['app'], function(app) {
     var sumNanaka = 0;
 
     $scope.getExpenses = function() {
-      expenseService.getListOfExpenses(setExpenses);
-      return $scope.expenses;
+      console.log("getExpenses()");
+      return expenseService.getExpenses();
     };
 
     var setExpenses = function(expenseArray) {

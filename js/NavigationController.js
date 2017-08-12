@@ -4,6 +4,14 @@ define(['app'], function(app) {
   	var topLevelPages = ['addExpense', 'detailList', 'summary'];
   	var currentTopLevelPage = topLevelPages[0];
 
+    $scope.getAddExpenseInclude = function() {
+      if($scope.showAddExpense() == true) {
+        return 'addExpense.html';
+      } else {
+        return '';
+      }
+    };
+
   	$scope.showAddExpense = function() {
   		console.log("in show add expense");
   		return currentTopLevelPage === topLevelPages[0];
@@ -13,9 +21,25 @@ define(['app'], function(app) {
   		return currentTopLevelPage === topLevelPages[1];
   	};
 
+    $scope.getDetailListInclude = function() {
+      if($scope.showDetailList() == true) {
+        return 'detailTable.html';
+      } else {
+        return '';
+      }
+    };
+
   	$scope.showSummary = function() {
   		return currentTopLevelPage === topLevelPages[2];
   	};
+
+    $scope.getSummaryInclude = function() {
+      if($scope.showSummary() == true) {
+        return 'summary.html';
+      } else {
+        return '';
+      }
+    };
 
   	$scope.handleAddExpense = function($event) {
   		currentTopLevelPage = topLevelPages[0];

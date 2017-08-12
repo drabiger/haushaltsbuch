@@ -1,6 +1,6 @@
 define(['app', 'gapi'], function(app) {
 	
-  app.controller('UserSessionController', function UserSessionController($scope) {
+  app.controller('UserSessionController', ['$scope', 'expenseService', function UserSessionController($scope, expenseService) {
 	// Client ID and API key from the Developer Console
 	var CLIENT_ID = '717798422387-m8sdsgknbl7d00l0m6usgf3rd0k756j4.apps.googleusercontent.com';
 
@@ -19,14 +19,19 @@ define(['app', 'gapi'], function(app) {
 		console.log("setUserAuthStatus: " + isSignedIn);
 		$scope.$apply(function() {
 			if(isSignedIn) {
-				$('#logoutMenu').show();
-				$scope.loggedIn = true;
-				$scope.currentUser = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getGivenName();
+				postAuthenticationActions();
 			} else {			
 				$scope.loggedIn = false;
 				$('#logoutMenu').hide();
 			}
 		});
+	};
+
+	var postAuthenticationActions = function() {
+		$('#logoutMenu').show();
+		$scope.loggedIn = true;
+		$scope.currentUser = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getGivenName();
+		expenseService.getExpensesFromGoogle();
 	};
 
 	$scope.logIn = function() {
@@ -51,5 +56,5 @@ define(['app', 'gapi'], function(app) {
       $scope.logIn();
 
 
-  });
+  }]);
 });

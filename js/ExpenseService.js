@@ -3,6 +3,8 @@ define(['app', 'gapi'], function(app) {
 	app.factory('expenseService', function() {
 	  	var addExpenseListeners = new Map();
 
+	  	var expenses;
+
 	  	var addExpense = function(payer, amount, shop, date, successCallback) {
 	  		
 	  		var success = false;
@@ -26,7 +28,11 @@ define(['app', 'gapi'], function(app) {
 
 	  	var registerAddExpenseListener = function(controller, callback) {
 	  		console.log("expenseService.registeraddExpenseListeners called by ", controller);
-	  		addExpenseListeners.set(controller, callback);
+	  		if(addExpenseListeners.has(controller)) {
+	  			console.log("expenseService.registeraddExpenseListeners: listener already registered.");
+	  		} else {
+	  			addExpenseListeners.set(controller, callback);
+	  		}
 	  	};
 
 
@@ -39,8 +45,16 @@ define(['app', 'gapi'], function(app) {
 	  		};
 	  	};
 
-	  	var getListOfExpenses = function(setterCallback) {
-	  		console.log("getListOfExpenses()");
+	  	var getExpenses = function() {
+	  		return expenses;
+	  	};
+
+	  	var getExpensesFromGoogle = function() {
+	  		console.log("getListOfExpenses() called");
+	  		if(typeof expenses != 'undefined') {
+	  			return;
+	  		}
+
 	        gapi.client.sheets.spreadsheets.values.get({
 	          spreadsheetId: '1hD2tnAnriHpDRhhVwOTfB-zuTfCOsOFCrdZF2DmizsY',
 	          range: 'Ausgaben!A2:E',
@@ -55,9 +69,9 @@ define(['app', 'gapi'], function(app) {
 					  result.push(createExpense(row[1], row[0], row[2], row[3]));
 					}
 				} else {
-					console.log("getListOfExpenses: No data in spreadsheet.")
+					console.log("getExpensesFromGoogle: No data in spreadsheet.")
 				}
-				setterCallback(result);
+				expenses = result;
 	        }, function(response) {
 				console.log('Error: ' + response.result.error.message);
 	        });
@@ -65,7 +79,8 @@ define(['app', 'gapi'], function(app) {
 
 	  	return {
 	  		addExpense : addExpense,
-	  		getListOfExpenses : getListOfExpenses,
+	  		getExpensesFromGoogle : getExpensesFromGoogle,
+	  		getExpenses : getExpenses,
 	  		registerAddExpenseListener : registerAddExpenseListener
 	  	};
 
