@@ -51,7 +51,11 @@ define(['app'], function(app) {
 
 	  	// Shop typeahead
 	  	$scope.selectedShop;
-	  	$scope.shops = ['Aldi', 'Rewe', 'Sarter', 'Werners', 'Obi', 'Saturn', 'Edeka', 'Kiosk', 'Pflanzenhof', 'Lo Sfizio', 'Oebel', 'Bäcker', 'Flug USA', 'Bahnfahrt Osnabrück'];
+//	  	$scope.shops = ['Aldi', 'Rewe', 'Sarter', 'Werners', 'Obi', 'Saturn', 'Edeka', 'Kiosk', 'Pflanzenhof', 'Lo Sfizio', 'Oebel', 'Bäcker', 'Flug USA', 'Bahnfahrt Osnabrück'];
+
+	  	$scope.getShops = function() {
+	  		return expenseService.getShops();
+	  	};
 
 	  	// date picker
 		$scope.open1 = function() {

@@ -58,6 +58,7 @@ define(['app', 'gapi'], function(app) {
 	        gapi.client.sheets.spreadsheets.values.get({
 	          spreadsheetId: '1hD2tnAnriHpDRhhVwOTfB-zuTfCOsOFCrdZF2DmizsY',
 	          range: 'Ausgaben!A2:E',
+	          valueRenderOption: 'UNFORMATTED_VALUE'
 	        }).then(function(response) {
 	        	console.log("got list of expenses from speadsheet");
 	        	var result = new Array;
@@ -77,10 +78,19 @@ define(['app', 'gapi'], function(app) {
 	        });
 	  	};
 
+	  	var getShops = function() {
+	  		var shops = new Set();
+	  		for (var i = 0; i < expenses.length; ++i) {
+				shops.add(expenses[i].shop);
+			}
+			return Array.from(shops).sort();	  		
+	  	};
+
 	  	return {
 	  		addExpense : addExpense,
 	  		getExpensesFromGoogle : getExpensesFromGoogle,
 	  		getExpenses : getExpenses,
+	  		getShops : getShops,
 	  		registerAddExpenseListener : registerAddExpenseListener
 	  	};
 
