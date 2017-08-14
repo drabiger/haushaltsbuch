@@ -9,7 +9,7 @@ define(['app', 'gapi'], function(app) {
 
 	// Authorization scopes required by the API; multiple scopes can be
 	// included, separated by spaces.
-	var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/spreadsheets.readonly';
+	var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/spreadsheets';
 
 	$scope.loggedIn = false;
 
@@ -35,6 +35,10 @@ define(['app', 'gapi'], function(app) {
 	};
 
 	$scope.logIn = function() {
+		gapi.auth2.getAuthInstance().signIn();
+	};
+
+	function handleClientLoad() {
 		gapi.load('client:auth2', initClient);
 	};
 
@@ -51,10 +55,9 @@ define(['app', 'gapi'], function(app) {
           // Handle the initial sign-in state.
           setUserAuthStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
         });
-      }
+    }
 
-      $scope.logIn();
-
+	handleClientLoad();
 
   }]);
 });

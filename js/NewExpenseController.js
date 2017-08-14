@@ -39,9 +39,11 @@ define(['app'], function(app) {
 	  	};
 
 	  	var setExpenseResultOperationMessage = function(operationResult, operationMessage) {
-	  		$scope.operationMessage.success = operationResult;
-	  		$scope.operationMessage.message = operationMessage;
-		  	
+	  		console.log("setExpenseResultOperationMessage()");
+	  		$scope.$apply(function() {
+		  		$scope.operationMessage.success = operationResult;
+		  		$scope.operationMessage.message = operationMessage;
+		  	});
 		  	setTimeout(function() {
 		  		$("#operationFeedback").delay(4000).slideUp(500, function() {
 			    	console.log("closed");

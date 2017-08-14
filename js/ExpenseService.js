@@ -12,18 +12,51 @@ define(['app', 'gapi'], function(app) {
 	  		if(!(parseFloat(amount) > 0)) {
 	  			operationMessage = "Betrag muss positiv sein."
 	  		} else {
-	  			success = true;
-	  			operationMessage = amount + "€ für " + payer + " eingetragen.";
-	  		}
-
-	  		if(successCallback) {
-		  		addExpenseListeners.forEach(function(callback, listener, mapObj) {
-		  			callback(payer, amount, shop, date);
+	  			var newExpense = createExpense(payer, amount, shop, date);
+		  		addExpenseToGoogle(newExpense, function(googleSuccess, response) {
+		  			if(googleSuccess) {
+		  				success = true;
+			  			operationMessage = amount + "€ für " + payer + " eingetragen.";
+			  			expenses.push(newExpense);
+		  			} else {
+		  				success = false;
+		  				operationMessage = 'error inserting row: ' + response.result.error.message;
+		  			}
+			  		addExpenseListeners.forEach(function(callback, listener, mapObj) {
+			  			callback(payer, amount, shop, date);
+			  		});
+			  		if(successCallback) {
+			  			successCallback(success, operationMessage);
+			  		}
 		  		});
-	  			successCallback(success, operationMessage);
 	  		}
-
 	  		return;
+	  	};
+
+	  	var addExpenseToGoogle = function(expense, successCallback) {
+	  		var params = {
+	  			spreadsheetId : '1jTXl-PiYyNaENylAzLG16R67aqEbeblUR0NQRzlvt1k',
+	  			range: 'Ausgaben!A2:E',
+	  			valueInputOption: 'USER_ENTERED',
+	  			insertDataOption: 'INSERT_ROWS'
+	  		};
+
+	  		var valueRangeBody = {
+	  			"range": "Ausgaben!A2:E",
+	  			"majorDimension": "ROWS",
+	  			values: [ [expense.amount, expense.payer, expense.shop, expense.date, "FALSE"] ]
+	  		};
+
+			var request = gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
+			      request.then(function(response) {
+			      	successCallback(true, response);
+			        // TODO: Change code below to process the `response` object:
+			        console.log("Inserted row. Response: " + response.result);
+			      }, function(reason) {
+			      	successCallback(false, reason);
+			        console.error('error inserting row: ' + reason.result.error.message);
+			      });
+
 	  	};
 
 	  	var registerAddExpenseListener = function(controller, callback) {
@@ -36,12 +69,24 @@ define(['app', 'gapi'], function(app) {
 	  	};
 
 
+	  	var addDate = function(originalDate, days) {
+	  		return originalDate.setDate(originalDate.getDate() + days);
+	  	};
+
 	  	var createExpense = function(payer, amount, shop, date) {
+	  		if(date instanceof Date) {
+	  			dateStr = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+	  		} else if(typeof(date) == 'number') {
+	  			var newDate = new Date(addDate(new Date("1899-12-30"), date));
+	  			dateStr = newDate.getFullYear() + "-" + (newDate.getMonth()+1) + "-" + newDate.getDate();
+	  		} else {
+	  			dateStr = date;
+	  		}
 	  		return {
 	  			payer: payer,
 	  			amount: amount,
 	  			shop: shop,
-	  			date: date
+	  			date: dateStr
 	  		};
 	  	};
 
@@ -56,7 +101,7 @@ define(['app', 'gapi'], function(app) {
 	  		}
 
 	        gapi.client.sheets.spreadsheets.values.get({
-	          spreadsheetId: '1hD2tnAnriHpDRhhVwOTfB-zuTfCOsOFCrdZF2DmizsY',
+	          spreadsheetId: '1jTXl-PiYyNaENylAzLG16R67aqEbeblUR0NQRzlvt1k', // '1hD2tnAnriHpDRhhVwOTfB-zuTfCOsOFCrdZF2DmizsY',
 	          range: 'Ausgaben!A2:E',
 	          valueRenderOption: 'UNFORMATTED_VALUE'
 	        }).then(function(response) {
