@@ -52,7 +52,12 @@ define(['app'], function(app) {
 		  	setTimeout(function() {
 		  		$("#operationFeedback").delay(4000).slideUp(500, function() {
 			    	console.log("closed");
-				})}, 500);
+			})}, 500);
+			if(operationResult) {
+				$scope.$apply(function() {
+			  		resetInputFormPartially();
+				});
+			}
 	  		resetInputFormPartially();
 	  	};
 
