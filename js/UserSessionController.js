@@ -15,6 +15,8 @@ define(['app', 'gapi'], function(app) {
 
 	$scope.currentUser = "";
 
+	$scope.googleDataInitialized = false;
+
 	var setUserAuthStatus = function(isSignedIn) {
 		console.log("setUserAuthStatus: " + isSignedIn);
 		$scope.$apply(function() {
@@ -31,7 +33,15 @@ define(['app', 'gapi'], function(app) {
 		$('#logoutMenu').show();
 		$scope.loggedIn = true;
 		$scope.currentUser = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile().getGivenName();
-		expenseService.getExpensesFromGoogle();
+		expenseService.getExpensesFromGoogle(function(success) {
+			if(success) {
+				$scope.$apply(function() {
+					$scope.googleDataInitialized = true;
+				});
+			} else {
+				alert('Entschuldigung, es gab ein Problem mit den Daten von Google.');
+			}
+		});
 	};
 
 	$scope.logIn = function() {

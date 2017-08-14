@@ -42,12 +42,12 @@
           </div>
         </nav>
         <div class="container">
-          <div class="row" ng-if="loggedIn == false">
+          <div class="row" ng-if="!loggedIn">
             <button type="button" class="btn btn-success btn-block btn-lg" ng-click="logIn()">Grant Access to Google Drive</button>
           </div>
 
-          <div class="row" ng-if="loggedIn == true">
-            <div class="col-xs-12 col-sm-5">
+          <div class="row" ng-show="googleDataInitialized">
+            <div class="col-xs-12 col-sm-5" ng-show="googleDataInitialized">
               <div ng-include="getAddExpenseInclude()"></div>
               <div ng-include="getDetailListInclude()"></div>
               <div ng-include="getSummaryInclude()"></div>
@@ -56,6 +56,11 @@
 <!--              <div ng-include src="'detailTable.html'"></div>
 -->
             </div>
+          </div class="row" ng-hide="!loggedIn || googleDataInitialized">
+            <div class="col-xs-12" ng-hide="!loggedIn || googleDataInitialized">
+              Lade Daten von Google...
+            </div>
+          <div>
           </div>
         </div>
       </div>

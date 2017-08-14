@@ -94,7 +94,7 @@ define(['app', 'gapi'], function(app) {
 	  		return expenses;
 	  	};
 
-	  	var getExpensesFromGoogle = function() {
+	  	var getExpensesFromGoogle = function(successCallback) {
 	  		console.log("getListOfExpenses() called");
 	  		if(typeof expenses != 'undefined') {
 	  			return;
@@ -118,8 +118,15 @@ define(['app', 'gapi'], function(app) {
 					console.log("getExpensesFromGoogle: No data in spreadsheet.")
 				}
 				expenses = result;
+				if(successCallback) {
+					successCallback(true);
+				}
+
 	        }, function(response) {
 				console.log('Error: ' + response.result.error.message);
+				if(successCallback) {
+					successCallback(false);
+				}
 	        });
 	  	};
 
