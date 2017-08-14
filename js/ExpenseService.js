@@ -41,7 +41,7 @@ define(['app', 'gapi'], function(app) {
 
 	  	var addExpenseToGoogle = function(expense, successCallback) {
 	  		var params = {
-	  			spreadsheetId : '1jTXl-PiYyNaENylAzLG16R67aqEbeblUR0NQRzlvt1k',
+	  			spreadsheetId : '1hD2tnAnriHpDRhhVwOTfB-zuTfCOsOFCrdZF2DmizsY',
 	  			range: 'Ausgaben!A2:E',
 	  			valueInputOption: 'USER_ENTERED',
 	  			insertDataOption: 'INSERT_ROWS'
@@ -107,7 +107,7 @@ define(['app', 'gapi'], function(app) {
 	  		}
 
 	        gapi.client.sheets.spreadsheets.values.get({
-	          spreadsheetId: '1jTXl-PiYyNaENylAzLG16R67aqEbeblUR0NQRzlvt1k', // '1hD2tnAnriHpDRhhVwOTfB-zuTfCOsOFCrdZF2DmizsY',
+	          spreadsheetId: '1hD2tnAnriHpDRhhVwOTfB-zuTfCOsOFCrdZF2DmizsY',
 	          range: 'Ausgaben!A2:E',
 	          valueRenderOption: 'UNFORMATTED_VALUE'
 	        }).then(function(response) {
