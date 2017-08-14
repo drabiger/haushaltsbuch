@@ -40,10 +40,15 @@ define(['app'], function(app) {
 
 	  	var setExpenseResultOperationMessage = function(operationResult, operationMessage) {
 	  		console.log("setExpenseResultOperationMessage()");
-	  		$scope.$apply(function() {
+	  		if(operationResult) {
+				$scope.$apply(function() {
+			  		$scope.operationMessage.success = operationResult;
+			  		$scope.operationMessage.message = operationMessage;
+			  	});
+			} else {
 		  		$scope.operationMessage.success = operationResult;
-		  		$scope.operationMessage.message = operationMessage;
-		  	});
+		  		$scope.operationMessage.message = operationMessage;		
+			}
 		  	setTimeout(function() {
 		  		$("#operationFeedback").delay(4000).slideUp(500, function() {
 			    	console.log("closed");

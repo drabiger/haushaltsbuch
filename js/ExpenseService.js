@@ -10,7 +10,9 @@ define(['app', 'gapi'], function(app) {
 	  		var success = false;
 	  		var operationMessage;
 	  		if(!(parseFloat(amount) > 0)) {
-	  			operationMessage = "Betrag muss positiv sein."
+	  			operationMessage = "Betrag muss positiv sein.";
+	  		} else if(payer != "Flash" && payer != "Nanaka") {
+	  			operationMessage = "Person ist unbekannt.";
 	  		} else {
 	  			var newExpense = createExpense(payer, amount, shop, date);
 		  		addExpenseToGoogle(newExpense, function(googleSuccess, response) {
@@ -29,6 +31,10 @@ define(['app', 'gapi'], function(app) {
 			  			successCallback(success, operationMessage);
 			  		}
 		  		});
+		  		return;
+	  		}
+	  		if(successCallback) {
+	  			successCallback(success, operationMessage);
 	  		}
 	  		return;
 	  	};
