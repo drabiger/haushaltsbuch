@@ -28,6 +28,14 @@ define(['app'], function(app) {
       });
     };
 
+    $scope.getSumFlash = function() {
+      return sumFlash;
+    };
+
+    $scope.getSumNanaka = function() {
+      return sumNanaka;
+    };
+
     var calcSums = function() {
       $.each(expenseService.getExpenses(), function(index, expense) {
         if(expense.payer === "Flash") {
