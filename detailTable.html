@@ -8,7 +8,7 @@
 					<th>Wer</th>
 					<th>Wann</th>
 					<th>Wo</th>
-					<th>Wie viel</th>
+					<th style="text-align: right">Wie viel</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -16,7 +16,7 @@
 					<td>{{expense.payer}}</td>
 					<td>{{expense.date}}</td>
 					<td>{{expense.shop}}</td>
-					<td>{{expense.amount}}</td>
+					<td style="text-align: right">{{expense.amount | currency:"€ ":2}}</td>
 				</tr>
 			</tbody>
 		</table>
