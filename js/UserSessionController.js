@@ -44,13 +44,6 @@ define(['app', 'gapi'], function(app) {
 		});
 	};
 
-	$scope.logOut = function() {
-		gapi.auth2.getAuthInstance().signOut();
-		$scope.googleDataInitialized = false;
-		$scope.loggedIn = false;
-		$scope.currentUser = "";
-	};
-
 	$scope.logIn = function() {
 		gapi.auth2.getAuthInstance().signIn();
 	};
