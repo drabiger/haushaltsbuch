@@ -3,6 +3,7 @@ define(['app'], function(app) {
   app.controller('NavigationController', function NavigationController($scope) {
   	var topLevelPages = ['addExpense', 'detailList', 'summary'];
   	var currentTopLevelPage = topLevelPages[0];
+    $scope.appTitle = document.title;
 
     $scope.getAddExpenseInclude = function() {
       if($scope.showAddExpense() == true) {

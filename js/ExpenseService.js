@@ -100,6 +100,8 @@ define(['app', 'gapi'], function(app) {
 	  		return expenses;
 	  	};
 
+	  	var spreadsheetId = $(document.body).data('spreadsheedid');
+
 	  	var getExpensesFromGoogle = function(successCallback) {
 	  		console.log("getListOfExpenses() called");
 	  		if(typeof expenses != 'undefined') {
@@ -107,7 +109,7 @@ define(['app', 'gapi'], function(app) {
 	  		}
 
 	        gapi.client.sheets.spreadsheets.values.get({
-	          spreadsheetId: '1hD2tnAnriHpDRhhVwOTfB-zuTfCOsOFCrdZF2DmizsY',
+	          spreadsheetId: spreadsheetId,
 	          range: 'Ausgaben!A2:E',
 	          valueRenderOption: 'UNFORMATTED_VALUE'
 	        }).then(function(response) {
